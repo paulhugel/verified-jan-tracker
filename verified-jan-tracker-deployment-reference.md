@@ -1,13 +1,17 @@
 # verified-jan-tracker — Deployment Recovery Reference
 
 ## Repository
+
 GitHub:
-https://github.com/paulhugel/verified-jan-tracker
+<https://github.com/paulhugel/verified-jan-tracker>
 
 ## Current Branch
+
 main
 
 ## Latest Commits
+
+- 08d2d25 — Add deployment recovery reference
 - 15c67bb — Fix Vercel SSR configuration
 - baf5f89 — Add explicit Vercel SSR routing configuration
 - 5c4af75 — Configure TanStack Start for Vercel SSR
@@ -16,9 +20,10 @@ main
 
 ---
 
-# Current Known State
+## Current Known State
 
-## Local build
+### Local build
+
 Working successfully.
 
 Current successful command:
@@ -28,6 +33,7 @@ npm run build
 ```
 
 Produces:
+
 - dist/client
 - dist/server/server.js
 
@@ -35,12 +41,14 @@ No TypeScript failures remain.
 
 ---
 
-# Current Deployment Problem
+## Current Deployment Problem
 
-## Symptom
+### Symptom
+
 Vercel deployments fail immediately (~1 second).
 
-## Most Likely Cause
+### Most Likely Cause
+
 `vercel.json` still contains unsupported runtime configuration:
 
 ```json
@@ -55,13 +63,15 @@ Vercel deployments fail immediately (~1 second).
 
 Vercel validates function paths before build output exists.
 
+Deployments with the `functions` block failed immediately (~1 second) before build execution, confirming the failure occurs during Vercel configuration validation.
+
 `dist/server/server.js` is generated later during build, so config parsing fails immediately.
 
 ---
 
-# Required Next Fix
+## Required Next Fix
 
-## Replace vercel.json with ONLY:
+### Replace vercel.json with ONLY
 
 ```json
 {
@@ -70,34 +80,40 @@ Vercel validates function paths before build output exists.
 }
 ```
 
-Remove:
-- functions
-- routes
+Confirmed invalid patterns:
+
+- `functions` block targeting generated build artifacts
+- manual `routes` overrides
 
 TanStack Start + Nitro should manage SSR automatically.
 
 ---
 
-# Files Added During Troubleshooting
+## Files Added During Troubleshooting
 
-## Current files
+### Current files
+
 - app.config.ts
 - nitro.config.ts
 - vercel.json
 
-## Note
+### Note
+
 These may still require cleanup later depending on SSR behavior after deployment succeeds.
 
 ---
 
-# Important Observations
+## Important Observations
 
-## DO NOT
+### DO NOT
+
 - manually map routes in vercel.json
 - manually target dist/server/server.js in Vercel functions config
+- assume Vercel Functions can reference generated build artifacts during config parsing
 - use tanstack-start build command (binary not installed)
 
-## KEEP
+### KEEP
+
 Build command in package.json:
 
 ```json
@@ -106,17 +122,18 @@ Build command in package.json:
 
 ---
 
-# Convex Environment Variable
+## Convex Environment Variable
 
 Configured in Vercel:
+
 - VITE_CONVEX_URL
 
 Current value used:
-https://amicable-platypus-682.convex.cloud
+<https://amicable-platypus-682.convex.cloud>
 
 ---
 
-# Remaining Verification Sequence
+## Remaining Verification Sequence
 
 After fixing vercel.json:
 
@@ -132,3 +149,30 @@ After fixing vercel.json:
 ---
 
 Generated for continuity from temporary ChatGPT thread.
+
+---
+
+## Current Repository State
+
+### Latest Known Commit
+
+- 08d2d25 — Add deployment recovery reference
+
+### Current Local State
+
+Unknown after latest commit sequence.
+
+Likely next verification:
+
+```bash
+git status --short
+```
+
+### Current Intended vercel.json
+
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/client"
+}
+```
