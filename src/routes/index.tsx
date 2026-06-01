@@ -47,10 +47,10 @@ function HomePage() {
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl bg-white p-5 shadow-sm md:col-span-2">
               <h3 className="mb-3 font-bold text-slate-900 text-sm uppercase tracking-wide">
-                Jan 0.8.0 Apple Silicon Status
+                Jan 0.8.1 Apple Silicon Status
               </h3>
               <p className="text-sm leading-relaxed text-slate-700">
-                <span className="font-semibold text-slate-900">Jan Version 0.8.0</span>{' '}
+                <span className="font-semibold text-slate-900">Jan Version 0.8.1</span>{' '}
                 for Apple Silicon MLX support is currently experimental. Embeddings are
                 unavailable, the reasoning toggle is not yet wired through, and some newer
                 model architectures may fail to load. Report issues on GitHub so they can
@@ -58,9 +58,16 @@ function HomePage() {
               </p>
             </div>
             <div className="rounded-2xl bg-white p-5 shadow-sm">
-              <h3 className="mb-2 font-bold text-slate-900 text-sm uppercase tracking-wide">Jan-v2-VL Capability Loss</h3>
+              <h3 className="mb-2 font-bold text-slate-900 text-sm uppercase tracking-wide">Jan GitHub Repository</h3>
               <p className="text-sm leading-relaxed text-slate-700">
-                Manually enable <span className="font-semibold text-slate-900">tools</span>, <span className="font-semibold text-slate-900">vision</span>, and <span className="font-semibold text-slate-900">proactive</span> in the model configuration.
+                <a
+                  className="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4 transition hover:decoration-slate-900"
+                  href="https://github.com/janhq/jan"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  janhq/jan
+                </a>
               </p>
             </div>
             <div className="rounded-2xl bg-white p-5 shadow-sm">
